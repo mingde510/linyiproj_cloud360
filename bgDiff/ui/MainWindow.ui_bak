@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x><y>0</y><width>1200</width><height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Lidar Background Subtract</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="mainLayout">
+    <property name="spacing">
+     <number>8</number>
+    </property>
+    <property name="margin">
+     <number>8</number>
+    </property>
+
+    <!-- 左侧控制区 -->
+    <item>
+     <layout class="QVBoxLayout" name="leftLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutResult">
+        <item>
+         <widget class="QLabel" name="lengthLabel">
+          <property name="text">
+           <string>Length: -- m</string>
+          </property>
+          <property name="minimumWidth">
+           <number>160</number>
+          </property>
+          <property name="styleSheet">
+           <string>font: 14pt; color: white;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="widthLabel">
+          <property name="text">
+           <string>Width: -- m</string>
+          </property>
+          <property name="minimumWidth">
+           <number>160</number>
+          </property>
+          <property name="styleSheet">
+           <string>font: 14pt; color: white;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="yawLabel">
+          <property name="text">
+           <string>Yaw: -- deg</string>
+          </property>
+          <property name="minimumWidth">
+           <number>160</number>
+          </property>
+          <property name="styleSheet">
+           <string>font: 14pt; color: white;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacerResult">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width><height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+
+      <item>
+       <widget class="QGroupBox" name="groupBoxParams">
+        <property name="title">
+         <string>参数设置</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayoutParams">
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelPort">
+           <property name="text">
+            <string>串口端口:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="portEdit">
+           <property name="text">
+            <string>/dev/ttyACM0</string>
+           </property>
+          </widget>
+         </item>
+
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelBgSec">
+           <property name="text">
+            <string>背景采集秒数:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="bgSecondsSpin">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>0.5</double>
+           </property>
+           <property name="maximum">
+            <double>60.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.5</double>
+           </property>
+           <property name="value">
+            <double>5.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="2" column="0">
+          <widget class="QLabel" name="labelFgSec">
+           <property name="text">
+            <string>前景采集秒数:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="fgSecondsSpin">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>0.5</double>
+           </property>
+           <property name="maximum">
+            <double>60.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.5</double>
+           </property>
+           <property name="value">
+            <double>5.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="3" column="0">
+          <widget class="QLabel" name="labelVoxel">
+           <property name="text">
+            <string>体素下采样(m):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="voxelSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>0.001</double>
+           </property>
+           <property name="maximum">
+            <double>1.000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.01</double>
+           </property>
+           <property name="value">
+            <double>0.050</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="4" column="0">
+          <widget class="QLabel" name="labelDiff">
+           <property name="text">
+            <string>差分基准阈值(m):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDoubleSpinBox" name="diffSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>0.010</double>
+           </property>
+           <property name="maximum">
+            <double>2.000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.01</double>
+           </property>
+           <property name="value">
+            <double>0.150</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QGroupBox" name="groupBoxROI">
+        <property name="title">
+         <string>ROI裁剪范围 (m)</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayoutROI">
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelXmin">
+           <property name="text">
+            <string>X min:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="xminSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-100.0</double>
+           </property>
+           <property name="maximum">
+            <double>100.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>-2.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="0" column="2">
+          <widget class="QLabel" name="labelXmax">
+           <property name="text">
+            <string>X max:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QDoubleSpinBox" name="xmaxSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-100.0</double>
+           </property>
+           <property name="maximum">
+            <double>100.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>2.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelYmin">
+           <property name="text">
+            <string>Y min:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="yminSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-100.0</double>
+           </property>
+           <property name="maximum">
+            <double>100.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>-2.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="1" column="2">
+          <widget class="QLabel" name="labelYmax">
+           <property name="text">
+            <string>Y max:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QDoubleSpinBox" name="ymaxSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-100.0</double>
+           </property>
+           <property name="maximum">
+            <double>100.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>2.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="2" column="0">
+          <widget class="QLabel" name="labelZmin">
+           <property name="text">
+            <string>Z min:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="zminSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-100.0</double>
+           </property>
+           <property name="maximum">
+            <double>100.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>-1.0</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="2" column="2">
+          <widget class="QLabel" name="labelZmax">
+           <property name="text">
+            <string>Z max:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QDoubleSpinBox" name="zmaxSpin">
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="minimum">
+            <double>-100.0</double>
+           </property>
+           <property name="maximum">
+            <double>100.0</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>1.0</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QGroupBox" name="groupBoxCloudDisplay">
+        <property name="title">
+         <string>点云显示选择</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayoutCloudDisplay">
+         <item>
+          <widget class="QCheckBox" name="cbBackground">
+           <property name="text">
+            <string>背景点云</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbForeground">
+           <property name="text">
+            <string>前景点云</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbDiff">
+           <property name="text">
+            <string>差分结果点云</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbShowPlane">
+           <property name="text">
+            <string>叠加显示平面</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QGroupBox" name="groupBoxPerson">
+        <property name="title">
+         <string>行人检测</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayoutPerson">
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelSource">
+           <property name="text">
+            <string>输入源:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="sourceCombo"/>
+         </item>
+
+         <item row="1" column="0">
+          <widget class="QLabel" name="rtspLabel">
+           <property name="text">
+            <string>RTSP:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="rtspEdit">
+           <property name="text">
+            <string>rtsp://</string>
+           </property>
+          </widget>
+         </item>
+
+         <item row="2" column="0">
+          <widget class="QLabel" name="engineLabel">
+           <property name="text">
+            <string>Engine:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="engineEdit">
+           <property name="text">
+            <string>config/best_person_simp_fp16.engine</string>
+           </property>
+          </widget>
+         </item>
+
+         <item row="3" column="0">
+          <widget class="QLabel" name="confLabel">
+           <property name="text">
+            <string>置信阈值:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="confSpin">
+           <property name="decimals">
+            <number>2</number>
+           </property>
+           <property name="minimum">
+            <double>0.10</double>
+           </property>
+           <property name="maximum">
+            <double>0.99</double>
+           </property>
+           <property name="singleStep">
+            <double>0.05</double>
+           </property>
+           <property name="value">
+            <double>0.50</double>
+           </property>
+          </widget>
+         </item>
+
+         <item row="4" column="0" colspan="2">
+          <layout class="QHBoxLayout" name="layoutPersonButtons">
+           <item>
+            <widget class="QPushButton" name="startPersonBtn">
+             <property name="text">
+              <string>启动检测</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="stopPersonBtn">
+             <property name="text">
+              <string>停止检测</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutButtons">
+        <item>
+         <widget class="QPushButton" name="makeBgButton">
+          <property name="text">
+           <string>制作背景</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="recordFgButton">
+          <property name="text">
+           <string>录入前景</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="subtractButton">
+          <property name="text">
+           <string>做差分</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exportButton">
+          <property name="text">
+           <string>导出PCD</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutStatus">
+        <item>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="textVisible">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="statusLabel">
+          <property name="text">
+           <string>就绪</string>
+          </property>
+          <property name="minimumWidth">
+           <number>120</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+
+      <item>
+       <widget class="QTextEdit" name="logText">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>日志输出...</string>
+        </property>
+        <property name="minimumHeight">
+         <number>120</number>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <spacer name="leftSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width><height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+
+    <!-- 右侧显示区 -->
+    <item>
+     <layout class="QVBoxLayout" name="rightLayout">
+      <item>
+       <widget class="QGroupBox" name="groupBoxCloudView">
+        <property name="title">
+         <string>点云显示</string>
+        </property>
+        <layout class="QVBoxLayout" name="layoutCloudView">
+         <item>
+          <widget class="QVTKWidget" name="vtkWidget">
+           <property name="minimumHeight">
+            <number>360</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBoxPersonView">
+        <property name="title">
+         <string>行人检测画面</string>
+        </property>
+        <layout class="QVBoxLayout" name="layoutPersonView">
+         <item>
+          <widget class="QLabel" name="personLabel">
+           <property name="minimumHeight">
+            <number>240</number>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="text">
+            <string>行人检测画面</string>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+
+ <customwidgets>
+  <customwidget>
+   <class>QVTKWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+
+ <resources/>
+ <connections/>
+</ui>
